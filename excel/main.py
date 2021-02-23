@@ -6,12 +6,14 @@ from typing import Tuple
 def reader(input_file: str) -> pd.DataFrame:
 
     df = pd.read_excel(input_file)
-    print(df.to_makrdown())
+
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        print(df)
 
     return df
 
 
-def writer() -> Tuple[openpyxl.workbook, openpyxl.worksheet]:
+def writer() -> Tuple[openpyxl.workbook.workbook.Workbook, openpyxl.worksheet.worksheet.Worksheet]:
 
     workbook = openpyxl.Workbook()
 
@@ -30,9 +32,9 @@ def save(output_file: str, workbook: openpyxl.workbook):
 
 if __name__ == "__main__":
 
-    input_file = input("Please input your excel file")
+    input_file = input("Please input your excel file: ")
     data = reader(input_file)
 
     workbook, sheet = writer()
-    write(0, 0, "test", sheet)
-    save("output_file.excel", workbook)
+    write(1, 1, "test", sheet)  # Row and column must be at least 1
+    save("output_file.xlsx", workbook)
