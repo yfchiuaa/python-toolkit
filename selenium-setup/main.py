@@ -3,16 +3,26 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, InvalidArgumentException
 
 
 class SeleniumSetup:
-    def __init__(self):
+    def __init__(self, url: str):
 
         # The base url for opening
-        self.url = input("Please enter the url you wanna go to: ")
+        self.url = url
 
-        # Driver options
+        # The driver to use
+        self.driver = None
+
+    def __del__(self):
+
+        if self.driver:
+            self.driver.close()
+
+    def chrome_driver_setup(self):
+
+        # Chome driver options
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--ignore-ssl-errors')
@@ -24,11 +34,12 @@ class SeleniumSetup:
         # The `Implicit Waits` method (https://selenium-python.readthedocs.io/waits.html)
         self.driver.implicitly_wait(10)
 
-        self.driver.get(self.url)
+    def start_driver(self):
 
-    def __del__(self):
-
-        self.driver.close()
+        try:
+            self.driver.get(self.url)
+        except InvalidArgumentException:
+            print("Please check your url if it is valid")
 
     def get_driver(self) -> webdriver:
 
@@ -51,4 +62,7 @@ class SeleniumSetup:
 
 
 if __name__ == "__main__":
-    selenium_setup = SeleniumSetup()
+    url = input("Please enter the url you wanna go to: ")
+    selenium_setup = SeleniumSetup(url)
+    selenium_setup.chrome_driver_setup()
+    selenium_setup.start_driver()
