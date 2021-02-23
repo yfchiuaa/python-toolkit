@@ -9,17 +9,22 @@ from selenium.common.exceptions import TimeoutException
 class SeleniumSetup:
     def __init__(self):
 
+        # The base url for opening
+        self.url = input("Please enter the url you wanna go to: ")
+
         # Driver options
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--ignore-ssl-errors')
-        options.add_experimental_option('w3c')      # Resolve cannot call non-w3c standard command
+        options.add_experimental_option('w3c', False)      # Resolve cannot call non-w3c standard command
 
         # Set up the driver
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
         # The `Implicit Waits` method (https://selenium-python.readthedocs.io/waits.html)
         self.driver.implicitly_wait(10)
+
+        self.driver.get(self.url)
 
     def __del__(self):
 
@@ -43,3 +48,7 @@ class SeleniumSetup:
             WebDriverWait(self.driver, 60).until(is_element_present)
         except TimeoutException:
             print("The page is taking too long to load")
+
+
+if __name__ == "__main__":
+    selenium_setup = SeleniumSetup()
