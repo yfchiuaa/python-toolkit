@@ -1,5 +1,7 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import IEDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -33,6 +35,14 @@ class SeleniumSetup:
 
         # The `Implicit Waits` method (https://selenium-python.readthedocs.io/waits.html)
         self.driver.implicitly_wait(10)
+
+    def firefox_driver_setup(self):
+
+        self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+    def ie_driver_setup(self):
+
+        self.driver = webdriver.Ie(IEDriverManager().install())
 
     def start_driver(self):
 
