@@ -116,6 +116,7 @@ venv.bak/
 # Project virtual env
 excel-env/
 selenium-setup-env/
+video-download-env/
 
 # Spyder project settings
 .spyderproject
