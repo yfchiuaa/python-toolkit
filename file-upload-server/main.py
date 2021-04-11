@@ -1,0 +1,33 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import logging
+
+hostname = "localhost"
+port = 3000
+
+
+class FileUploadServer(BaseHTTPRequestHandler):
+
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+
+    def do_GET(self):
+        self._set_headers()
+        if self.path == '/':
+            self.path = '/index.html'
+        return BaseHTTPRequestHandler.do_GET(self)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    server = HTTPServer((hostname, port), FileUploadServer)
+    logging.info(f"Server started at http://{hostname}:{port}")
+
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    server.server_close()
+    logging.info("Stopping server...")

@@ -117,6 +117,7 @@ venv.bak/
 excel-env/
 selenium-setup-env/
 video-download-env/
+file-upload-server-env/
 
 # Spyder project settings
 .spyderproject

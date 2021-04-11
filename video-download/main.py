@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import youtube_dl
 import moviepy.editor
+from prompt_toolkit.shortcuts import message_dialog
 
 
 def youtube_download():
@@ -19,4 +20,4 @@ def audio_extract():
 
 
 if __name__ == "__main__":
-    pass
+    message_dialog(title='Hi', text='Do you wanna click ok?\nPress ENTER to continue.').run()
