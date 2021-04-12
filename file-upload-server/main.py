@@ -18,9 +18,10 @@ class FileUploadServer(BaseHTTPRequestHandler):
         self.wfile.write(h.read())
 
     def do_POST(self):
-        if self.path == '/':
-            self.path = './index.html'
-
+        if self.path == '/upload':
+            self._set_headers()
+            h = open("./index.html", "rb")
+            self.wfile.write(h.read())
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
