@@ -14,15 +14,18 @@ class FileUploadServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
+        h = open("./index.html", "rb")
+        self.wfile.write(h.read())
+
+    def do_POST(self):
         if self.path == '/':
-            self.path = '/index.html'
-        return BaseHTTPRequestHandler.do_GET(self)
+            self.path = './index.html'
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     server = HTTPServer((hostname, port), FileUploadServer)
-    logging.info(f"Server started at http://{hostname}:{port}")
+    print(f"Server started at http://{hostname}:{port}")
 
     try:
         server.serve_forever()
