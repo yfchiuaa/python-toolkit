@@ -23,6 +23,7 @@ class FileUploadServer(BaseHTTPRequestHandler):
             h = open("./index.html", "rb")
             self.wfile.write(h.read())
 
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     server = HTTPServer((hostname, port), FileUploadServer)
